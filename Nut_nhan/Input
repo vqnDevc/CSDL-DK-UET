@@ -1,0 +1,24 @@
+#include "stm32f10x.h"
+
+void GPIO_ConfigPinC13(void)
+{
+	RCC->APB2ENR |= 0x10;
+	GPIOC->CRH &= 0xFF0FFFFF;
+	GPIOC->CRH |= 0x00300000;
+}
+void Delay_Ms(uint32_t nCount) 
+{
+  while(nCount--);
+}
+
+int main()
+{
+	GPIO_ConfigPinC13();
+	while(1)
+	{
+		GPIOC->ODR |= 0x2000;
+		Delay_Ms(10000000);
+		GPIOC->ODR &= ~0x2000;
+		Delay_Ms(10000000);
+	}
+}
